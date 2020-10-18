@@ -13,7 +13,7 @@ public class UserTests {
 
 	@Test
 	public void createUser() {
-		User user = new User("Prueba", "Prueba", "03947037F");
+		User user = new User("Prueba", "Prueba", "12356879F");
 
 		User aux = userController.createUser(user.getName(), user.getPassword(), user.getDni());
 

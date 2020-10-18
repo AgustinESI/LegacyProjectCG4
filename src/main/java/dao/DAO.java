@@ -12,5 +12,4 @@ public interface DAO {
 
 	public Object delete(User u);
 
-	public void openConnection();
 }

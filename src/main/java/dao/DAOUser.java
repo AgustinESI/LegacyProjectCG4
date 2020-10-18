@@ -1,61 +1,60 @@
 package main.java.dao;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.util.Properties;
-
 import main.java.model.User;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
 
 public class DAOUser implements main.java.dao.DAO {
 
-	private Connection CONNECTION = null;
+    private Connection CONNECTION = null;
 
-	public Object create(User u) {
-		this.openConnection();
-		// TODO Auto-generated method stub
-		return u;
-	}
+    public User create(User u) {
+        CONNECTION = ConnectionSQLite.dbConnector();
+        // TODO Auto-generated method stub
+        return u;
+    }
 
-	public Object read(User u) {
-		this.openConnection();
-		// TODO Auto-generated method stub
-		return u;
-	}
+    public User read(User u) {
+        CONNECTION = ConnectionSQLite.dbConnector();
+        // TODO Auto-generated method stub
+        return u;
+    }
 
-	public Object delete(User u) {
-		this.openConnection();
-		// TODO Auto-generated method stub
-		return u;
-	}
+    public User delete(User u) {
+        CONNECTION = ConnectionSQLite.dbConnector();
+        // TODO Auto-generated method stub
+        return u;
+    }
 
-	public Object update(User u) {
-		this.openConnection();
-		// TODO Auto-generated method stub
-		return u;
-	}
+    public User update(User u) {
+        CONNECTION = ConnectionSQLite.dbConnector();
+        // TODO Auto-generated method stub
+        return u;
+    }
 
-	public void openConnection() {
-		InputStream inputStream = null;
-		Properties prop = null;
-		try {
-			prop = new Properties();
-			String propFileName = "config.properties";
+    public List<User> selectAllUsers() {
+        CONNECTION = ConnectionSQLite.dbConnector();
 
-			inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+        Statement stmt = null;
 
-			if (inputStream != null) {
-				prop.load(inputStream);
-			} else {
-				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-			}
+        try {
+            stmt = this.CONNECTION.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM user");
 
-			//TODO: hacer la conexion
-			
-			inputStream.close();
-		} catch (Exception e) {
-			System.out.println("Exception: " + e);
-		}
-	}
+            while (rs.next()){
+                System.out.println(rs.getString("user_name"));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 }

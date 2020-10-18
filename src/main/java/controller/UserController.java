@@ -2,6 +2,7 @@ package main.java.controller;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -42,7 +43,7 @@ public class UserController {
 		return aux;
 	}
 
-	private boolean deleteUser(String login, String password) {
+	public boolean deleteUser(String login, String password) {
 		boolean deleted = false;
 
 		if (StringUtils.isNotBlank(login) && StringUtils.isNotBlank(password)) {
@@ -52,6 +53,13 @@ public class UserController {
 			}
 		}
 		return deleted;
+	}
+
+	public List<User> getAllUsers(){
+		List<User>  list = this.daoUser.selectAllUsers();
+
+
+		return list;
 	}
 
 	public String getMessage(String name) {
