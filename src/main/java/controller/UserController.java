@@ -15,16 +15,14 @@ public class UserController {
 
 	private DAOUser daoUser = new DAOUser();
 
-	public boolean authenticateUser(String login, String password) {
+	public User authenticateUser(String login, String password) {
 		boolean authenticated = false;
-
+		User u = null;
 		if (StringUtils.isNotBlank(login) && StringUtils.isNotBlank(password)) {
-			User u = new User(login, password, null);
-			if (this.daoUser.read(u) != null) {
-				authenticated = true;
-			}
+			User aux = new User(login, password, null);
+			u = this.daoUser.read(aux);
 		}
-		return authenticated;
+		return u;
 	}
 
 	public boolean checkDNI(String arg) {

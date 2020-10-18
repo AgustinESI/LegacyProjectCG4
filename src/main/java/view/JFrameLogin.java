@@ -13,7 +13,10 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.commons.lang3.StringUtils;
+
 import main.java.controller.UserController;
+import main.java.model.User;
 
 public class JFrameLogin extends JFrame {
 
@@ -74,7 +77,6 @@ public class JFrameLogin extends JFrame {
 		textFieldPass.setBounds(86, 116, 134, 28);
 		contentPane.add(textFieldPass);
 
-		
 		JLabel labelDNI = new JLabel(userController.getMessage("dni"));
 		labelDNI.setBounds(6, 164, 61, 16);
 		contentPane.add(labelDNI);
@@ -83,20 +85,29 @@ public class JFrameLogin extends JFrame {
 		textFieldDNI.setColumns(10);
 		textFieldDNI.setBounds(86, 164, 134, 28);
 		contentPane.add(textFieldDNI);
-		
-		
+
 		JButton buttonAceptar = new JButton(userController.getMessage("accept"));
 		buttonAceptar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				boolean existe = false;
-						
 				try {
-					if (userController.authenticateUser(textFieldLog.getText(), textFieldPass.getText())) {
-						textPaneEstado.setText(userController.getMessage("login.okLogin"));
+
+					if (StringUtils.isNotBlank(textFieldLog.getText())
+							&& StringUtils.isNotBlank(textFieldPass.getText())) {
+
+						User u = userController.authenticateUser(textFieldLog.getText(), textFieldPass.getText());
+						if (u != null) {
+							textPaneEstado.setText(
+									userController.getMessage("login.okLogin") + u.getName());
+							buttonAceptar.setEnabled(false);
+						} else {
+							textPaneEstado.setText(userController.getMessage("login.errLogin"));
+						}
+
 					} else {
-						textPaneEstado.setText(userController.getMessage("login.errLogin"));
+						textPaneEstado.setText(userController.getMessage("login.emptyFields"));
 					}
+
 				} catch (Exception e) {
 					textPaneEstado.setText(userController.getMessage("login.err") + e.toString());
 				}
@@ -121,9 +132,8 @@ public class JFrameLogin extends JFrame {
 		buttonLimpiar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				//textPaneEstado.setText(userController.getMessage("login.panel"));
+
+				// textPaneEstado.setText(userController.getMessage("login.panel"));
 				/*
 				 * Limpiaremos el panel de salida para visualizar nuevas operaciones
 				 */
