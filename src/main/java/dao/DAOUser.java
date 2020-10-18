@@ -6,55 +6,62 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DAOUser implements main.java.dao.DAO {
 
-    private Connection CONNECTION = null;
+	private Connection CONNECTION = null;
 
-    public User create(User u) {
-        CONNECTION = ConnectionSQLite.dbConnector();
-        // TODO Auto-generated method stub
-        return u;
-    }
+	public User create(User u) {
+		CONNECTION = ConnectionSQLite.dbConnector();
+		// TODO Auto-generated method stub
+		return u;
+	}
 
-    public User read(User u) {
-        CONNECTION = ConnectionSQLite.dbConnector();
-        // TODO Auto-generated method stub
-        return u;
-    }
+	public User read(User u) {
+		CONNECTION = ConnectionSQLite.dbConnector();
+		// TODO Auto-generated method stub
+		return u;
+	}
 
-    public User delete(User u) {
-        CONNECTION = ConnectionSQLite.dbConnector();
-        // TODO Auto-generated method stub
-        return u;
-    }
+	public User delete(User u) {
+		CONNECTION = ConnectionSQLite.dbConnector();
+		// TODO Auto-generated method stub
+		return u;
+	}
 
-    public User update(User u) {
-        CONNECTION = ConnectionSQLite.dbConnector();
-        // TODO Auto-generated method stub
-        return u;
-    }
+	public User update(User u) {
+		CONNECTION = ConnectionSQLite.dbConnector();
+		// TODO Auto-generated method stub
+		return u;
+	}
 
-    public List<User> selectAllUsers() {
-        CONNECTION = ConnectionSQLite.dbConnector();
+	public List<User> selectAllUsers() {
+		CONNECTION = ConnectionSQLite.dbConnector();
 
-        Statement stmt = null;
+		List<User> list = new ArrayList<User>();
 
-        try {
-            stmt = this.CONNECTION.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM user");
+		Statement stmt = null;
 
-            while (rs.next()){
-                System.out.println(rs.getString("user_name"));
-            }
+		try {
+			stmt = this.CONNECTION.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from users");
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+			while (rs.next()) {
 
-        return null;
-    }
+				User u = new User();
+				u.setDni(rs.getString("user_dni"));
+				u.setName(rs.getString("user_name"));
+				u.setPassword(rs.getString("user_pwd"));
+				list.add(u);
+			}
 
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+
+		return list;
+	}
 
 }

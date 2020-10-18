@@ -55,11 +55,8 @@ public class UserController {
 		return deleted;
 	}
 
-	public List<User> getAllUsers(){
-		List<User>  list = this.daoUser.selectAllUsers();
-
-
-		return list;
+	public List<User> getAllUsers() {
+		return this.daoUser.selectAllUsers();
 	}
 
 	public String getMessage(String name) {
