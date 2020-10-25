@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
@@ -22,7 +24,7 @@ public class JFrameLogin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldLog;
-	private JTextField textFieldPass;
+	private JPasswordField textFieldPass;
 	private JTextField textFieldDNI;
 	private JTextPane textPaneEstado;
 	private UserController userController = new UserController();
@@ -54,6 +56,8 @@ public class JFrameLogin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		userController.getAllUsers().stream().forEach((user) -> System.out.println(user));
 
 		JLabel lblIntroduzcaElLogin = new JLabel(userController.getMessage("login.subtitle"));
 		lblIntroduzcaElLogin.setBounds(6, 19, 386, 43);
@@ -72,7 +76,7 @@ public class JFrameLogin extends JFrame {
 		label.setBounds(6, 74, 61, 16);
 		contentPane.add(label);
 
-		textFieldPass = new JTextField();
+		textFieldPass = new JPasswordField();
 		textFieldPass.setColumns(10);
 		textFieldPass.setBounds(86, 116, 134, 28);
 		contentPane.add(textFieldPass);
@@ -80,10 +84,12 @@ public class JFrameLogin extends JFrame {
 		JLabel labelDNI = new JLabel(userController.getMessage("dni"));
 		labelDNI.setBounds(6, 164, 61, 16);
 		contentPane.add(labelDNI);
+		labelDNI.setVisible(Boolean.FALSE);
 
 		textFieldDNI = new JTextField();
 		textFieldDNI.setColumns(10);
 		textFieldDNI.setBounds(86, 164, 134, 28);
+		textFieldDNI.setVisible(Boolean.FALSE);
 		contentPane.add(textFieldDNI);
 
 		JButton buttonAceptar = new JButton(userController.getMessage("accept"));
@@ -97,8 +103,7 @@ public class JFrameLogin extends JFrame {
 
 						User u = userController.authenticateUser(textFieldLog.getText(), textFieldPass.getText());
 						if (u != null) {
-							textPaneEstado.setText(
-									userController.getMessage("login.okLogin") + u.getName());
+							textPaneEstado.setText(userController.getMessage("login.okLogin") + u.getName());
 							buttonAceptar.setEnabled(false);
 						} else {
 							textPaneEstado.setText(userController.getMessage("login.errLogin"));
@@ -134,9 +139,11 @@ public class JFrameLogin extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				// textPaneEstado.setText(userController.getMessage("login.panel"));
-				/*
-				 * Limpiaremos el panel de salida para visualizar nuevas operaciones
-				 */
+				textPaneEstado.setText("");
+				textFieldLog.setText("");
+				textFieldPass.setText("");
+				textFieldDNI.setText("");
+				buttonAceptar.setEnabled(true);
 			}
 		});
 		buttonLimpiar.setBounds(264, 117, 148, 29);
@@ -145,8 +152,8 @@ public class JFrameLogin extends JFrame {
 		JButton btnNuevoUsuario = new JButton(userController.getMessage("login.newUser"));
 		btnNuevoUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				JFrameNuevoUsuario frame = new JFrameNuevoUsuario();
-//				frame.setVisible(true);
+				JFrameNuevoUsuario frame = new JFrameNuevoUsuario();
+				frame.setVisible(true);
 			}
 		});
 		btnNuevoUsuario.setBounds(264, 157, 148, 29);
@@ -155,8 +162,8 @@ public class JFrameLogin extends JFrame {
 		JButton btnEliminarUsuario = new JButton(userController.getMessage("login.deleteUser"));
 		btnEliminarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				JFrameEliminarUsuario frame = new JFrameEliminarUsuario();
-//				frame.setVisible(true);
+				JFrameEliminarUsuario frame = new JFrameEliminarUsuario();
+				frame.setVisible(true);
 			}
 		});
 		btnEliminarUsuario.setBounds(264, 197, 148, 28);

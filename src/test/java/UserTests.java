@@ -15,7 +15,7 @@ public class UserTests {
 	public void createUser() {
 		User user = new User("Prueba", "Prueba", "12356879F");
 
-		User aux = userController.createUser(user.getName(), user.getPassword(), user.getDni());
+		User aux = userController.createUser(user);
 
 		assertEquals(aux.getName(), user.getName());
 		assertEquals(aux.getPassword(), user.getPassword());

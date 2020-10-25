@@ -29,25 +29,33 @@ public class UserController {
 		return Pattern.compile("^[0-9]{8,8}[A-Za-z]$").matcher(arg).find();
 	}
 
-	public User createUser(String login, String password, String dni) {
+	public boolean readDNI(String dni) {
+
+		boolean exist = false;
+		if (StringUtils.isNotBlank(dni)) {
+			exist = this.daoUser.readDNI(dni);
+		}
+		return exist;
+	}
+
+	public User createUser(User u) {
 		User aux = null;
 
-		if (StringUtils.isNotBlank(login) && StringUtils.isNotBlank(password) && StringUtils.isNotBlank(dni)) {
-			User u = new User(login, password, dni);
-			if (this.daoUser.read(u) != null) {
+		if (StringUtils.isNotBlank(u.getName()) && StringUtils.isNotBlank(u.getPassword())
+				&& StringUtils.isNotBlank(u.getDni())) {
+			if (this.daoUser.read(u) == null) {
 				aux = (User) this.daoUser.create(u);
 			}
 		}
 		return aux;
 	}
 
-	public boolean deleteUser(String login, String password) {
+	public boolean deleteUser(User u) {
 		boolean deleted = false;
 
-		if (StringUtils.isNotBlank(login) && StringUtils.isNotBlank(password)) {
-			User u = new User(login, password, null);
-			if (this.daoUser.delete(u) != null) {
-				deleted = true;
+		if (StringUtils.isNotBlank(u.getName()) && StringUtils.isNotBlank(u.getPassword())) {
+			if (this.daoUser.read(u) != null) {
+				deleted = this.daoUser.delete(u);
 			}
 		}
 		return deleted;
