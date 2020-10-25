@@ -1,4 +1,4 @@
-package main.java.dao;
+package main.java.model;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

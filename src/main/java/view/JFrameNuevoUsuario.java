@@ -66,43 +66,6 @@ public class JFrameNuevoUsuario extends JFrame {
 		textFieldDNI.setBounds(87, 125, 134, 28);
 		contentPane.add(textFieldDNI);
 
-		JButton btnAltaUsuario = new JButton(userController.getMessage("newUser.newUser"));
-		btnAltaUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				if (StringUtils.isNotBlank(textFieldLogin.getText())
-						&& StringUtils.isNotBlank(textFieldPassword.getText())
-						&& StringUtils.isNotBlank(textFieldDNI.getText())) {
-
-					if (userController.checkDNI(textFieldDNI.getText())) {
-						if (!userController.readDNI(textFieldDNI.getText())) {
-							User u = new User(textFieldLogin.getText(), textFieldPassword.getText(),
-									textFieldDNI.getText());
-							User aux = userController.createUser(u);
-
-							if (aux != null) {
-								textPane.setText(userController.getMessage("newUser.newUserOk"));
-							} else {
-								textPane.setText(userController.getMessage("newUser.existUser"));
-							}
-						} else {
-							textPane.setText(userController.getMessage("newUser.existDNI"));
-						}
-
-					} else {
-						textPane.setText(userController.getMessage("newUser.notValidDNI"));
-					}
-
-				} else {
-					textPane.setText(userController.getMessage("newUser.emptyFields"));
-				}
-
-			}
-		});
-
-		btnAltaUsuario.setBounds(253, 76, 117, 29);
-		contentPane.add(btnAltaUsuario);
-
 		JLabel label_1 = new JLabel("Estado");
 		label_1.setForeground(Color.RED);
 		label_1.setBounds(6, 169, 61, 16);
@@ -113,5 +76,11 @@ public class JFrameNuevoUsuario extends JFrame {
 		textPane.setEditable(false);
 		textPane.setBounds(6, 213, 407, 102);
 		contentPane.add(textPane);
+		
+		
+		JButton btnAltaUsuario = new JButton(userController.getMessage("newUser.newUser"));
+		btnAltaUsuario.addActionListener(userController.btnAddUser(textFieldLogin, textFieldPassword, textFieldDNI, textPane));
+		btnAltaUsuario.setBounds(253, 76, 117, 29);
+		contentPane.add(btnAltaUsuario);
 	}
 }

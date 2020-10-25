@@ -52,30 +52,6 @@ public class JFrameEliminarUsuario extends JFrame {
 		textFieldPassword.setBounds(87, 75, 134, 28);
 		contentPane.add(textFieldPassword);
 
-		JButton btnAltaUsuario = new JButton("Eliminar usuario");
-		btnAltaUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				if (StringUtils.isNotBlank(textFieldLogin.getText())
-						&& StringUtils.isNotBlank(textFieldPassword.getText())) {
-					User u = new User(textFieldLogin.getText(), textFieldPassword.getText(), null);
-
-					if (userController.deleteUser(u)) {
-						textPane.setText(userController.getMessage("delUser.delUserOk"));
-					} else {
-						textPane.setText(userController.getMessage("delUser.delUserErr"));
-					}
-
-				} else {
-					textPane.setText(userController.getMessage("newUser.emptyFields"));
-				}
-
-			}
-
-		});
-		btnAltaUsuario.setBounds(253, 76, 141, 29);
-		contentPane.add(btnAltaUsuario);
-
 		JLabel label_1 = new JLabel(userController.getMessage("state"));
 		label_1.setForeground(Color.RED);
 		label_1.setBounds(6, 126, 61, 16);
@@ -86,5 +62,10 @@ public class JFrameEliminarUsuario extends JFrame {
 		textPane.setEditable(false);
 		textPane.setBounds(6, 154, 407, 102);
 		contentPane.add(textPane);
+		
+		JButton btnAltaUsuario = new JButton("Eliminar usuario");
+		btnAltaUsuario.addActionListener(userController.btnDelUser(textFieldLogin, textFieldPassword, textPane));
+		btnAltaUsuario.setBounds(253, 76, 141, 29);
+		contentPane.add(btnAltaUsuario);
 	}
 }

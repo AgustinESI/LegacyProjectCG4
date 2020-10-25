@@ -1,4 +1,4 @@
-package main.java.dao;
+package main.java.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,9 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.model.User;
-
-public class DAOUser implements main.java.dao.DAO {
+public class DAOUser implements main.java.model.DAO {
 
 	private Connection CONNECTION = null;
 

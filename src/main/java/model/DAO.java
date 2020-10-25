@@ -1,6 +1,4 @@
-package main.java.dao;
-
-import main.java.model.User;
+package main.java.model;
 
 public interface DAO {
 

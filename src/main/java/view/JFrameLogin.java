@@ -92,36 +92,6 @@ public class JFrameLogin extends JFrame {
 		textFieldDNI.setVisible(Boolean.FALSE);
 		contentPane.add(textFieldDNI);
 
-		JButton buttonAceptar = new JButton(userController.getMessage("accept"));
-		buttonAceptar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-
-					if (StringUtils.isNotBlank(textFieldLog.getText())
-							&& StringUtils.isNotBlank(textFieldPass.getText())) {
-
-						User u = userController.authenticateUser(textFieldLog.getText(), textFieldPass.getText());
-						if (u != null) {
-							textPaneEstado.setText(userController.getMessage("login.okLogin") + u.getName());
-							buttonAceptar.setEnabled(false);
-						} else {
-							textPaneEstado.setText(userController.getMessage("login.errLogin"));
-						}
-
-					} else {
-						textPaneEstado.setText(userController.getMessage("login.emptyFields"));
-					}
-
-				} catch (Exception e) {
-					textPaneEstado.setText(userController.getMessage("login.err") + e.toString());
-				}
-
-			}
-		});
-		buttonAceptar.setBounds(264, 69, 148, 29);
-		contentPane.add(buttonAceptar);
-
 		JLabel lblEstado = new JLabel(userController.getMessage("state"));
 		lblEstado.setForeground(Color.RED);
 		lblEstado.setBounds(6, 208, 61, 16);
@@ -133,39 +103,23 @@ public class JFrameLogin extends JFrame {
 		textPaneEstado.setBounds(6, 235, 406, 102);
 		contentPane.add(textPaneEstado);
 
+		JButton buttonAceptar = new JButton(userController.getMessage("accept"));
+		buttonAceptar.addActionListener(userController.btnAccept(textFieldLog, textFieldPass, textPaneEstado, buttonAceptar));
+		buttonAceptar.setBounds(264, 69, 148, 29);
+		contentPane.add(buttonAceptar);
+		
 		JButton buttonLimpiar = new JButton(userController.getMessage("clean"));
-		buttonLimpiar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-
-				// textPaneEstado.setText(userController.getMessage("login.panel"));
-				textPaneEstado.setText("");
-				textFieldLog.setText("");
-				textFieldPass.setText("");
-				textFieldDNI.setText("");
-				buttonAceptar.setEnabled(true);
-			}
-		});
+		buttonLimpiar.addActionListener(userController.btnClean(textFieldLog, textFieldPass, textPaneEstado, textFieldDNI, buttonAceptar));
 		buttonLimpiar.setBounds(264, 117, 148, 29);
 		contentPane.add(buttonLimpiar);
 
 		JButton btnNuevoUsuario = new JButton(userController.getMessage("login.newUser"));
-		btnNuevoUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JFrameNuevoUsuario frame = new JFrameNuevoUsuario();
-				frame.setVisible(true);
-			}
-		});
+		btnNuevoUsuario.addActionListener(userController.btnNewUser());
 		btnNuevoUsuario.setBounds(264, 157, 148, 29);
 		contentPane.add(btnNuevoUsuario);
 
 		JButton btnEliminarUsuario = new JButton(userController.getMessage("login.deleteUser"));
-		btnEliminarUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFrameEliminarUsuario frame = new JFrameEliminarUsuario();
-				frame.setVisible(true);
-			}
-		});
+		btnEliminarUsuario.addActionListener(userController.btnDelUser());
 		btnEliminarUsuario.setBounds(264, 197, 148, 28);
 		contentPane.add(btnEliminarUsuario);
 
