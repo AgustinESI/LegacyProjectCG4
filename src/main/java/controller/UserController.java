@@ -47,7 +47,7 @@ public class UserController {
 	}
 	
 	
-	public static String encryptPass(String txt) {
+	public String encryptPass(String txt) {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
             byte[] array = md.digest(txt.getBytes());
