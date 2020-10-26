@@ -56,8 +56,6 @@ public class JFrameLogin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		userController.getAllUsers().stream().forEach((user) -> System.out.println(user));
 
 		JLabel lblIntroduzcaElLogin = new JLabel(userController.getMessage("login.subtitle"));
 		lblIntroduzcaElLogin.setBounds(6, 19, 386, 43);
